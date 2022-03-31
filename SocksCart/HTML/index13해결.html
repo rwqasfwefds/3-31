@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <!-- import Styles Css -->
+        <link rel="stylesheet" href="../assets/styles.css" />
+        <!-- vue 3.x CDN -->
+        <script src="https://unpkg.com/vue@3.0.0-beta.12/dist/vue.global.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <div class="nav-bar"></div>
+
+            <!-- 장바구니 카운트 수치 -->
+            <div class="cart">Cart{{cart}}</div>
+
+            <div class="product-display">
+                <div class="product-container">
+                    <div class="product-image">
+                        <!-- 이미지가 들어갈 공간 -->
+                        <img
+                            v-bind:src="image"
+                            :class="{'out-of-stock-img' : !InStock}"
+                        />
+                    </div>
+
+                    <div class="product-info">
+                        <!-- 연습문제 title = brand + ' ' + product -->
+                        <!-- title은 펑션으로 정의 -->
+                        <h1>{{title}}</h1>
+                        <p v-if="InStock">In Stock</p>
+                        <p v-else>Out of Stock</p>
+                        <ul>
+                            <li v-for="detail in details">{{detail}}</li>
+                        </ul>
+                        <div
+                            v-for="(variant, index) in variants"
+                            :key="variant.id"
+                            v-on:mouseover="updateImage(index)"
+                            class="color-circle"
+                            v-bind:style="{'background-color' : variant.color}"
+                        ></div>
+                        <!-- 장바구니 버튼 -->
+                        <button
+                            class="button"
+                            :class="{disabledButton : !InStock}"
+                            :disabled="!InStock"
+                            v-on:click="addToCart"
+                        >
+                            Add To Cart
+                        </button>
+                        <!-- <button class="button" v-on:click="deleteToCart">
+                            Delete to cart
+                        </button> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Import Js -->
+        <script src="../js/main13해결.js"></script>
+
+        <script>
+            const mountedApp = app.mount("#app");
+        </script>
+    </body>
+</html>
